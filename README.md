@@ -7,6 +7,8 @@ A simple command-line utility to synchronize watched / seen status between diffe
 [![Dependencies](https://david-dm.org/jacobwgillespie/plex-sync.svg)](https://david-dm.org/jacobwgillespie/plex-sync)
 ![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?maxAge=2592000)
 
+[![asciicast](https://asciinema.org/a/9j3oyj46vugcc039l7tbxecw4.png)](https://asciinema.org/a/9j3oyj46vugcc039l7tbxecw4)
+
 ## Features
 
 * Syncs watch status between different Plex servers.
