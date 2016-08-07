@@ -39,8 +39,16 @@ export const fetchMedia = async (server) => {
   .map(
     media => media.$
   )
-  .map(({ key, title, viewCount, year }) => ({
-    guid: `${year} - ${title}`,
+  .map(({
+    grandparentTitle = '',
+    index = '',
+    key,
+    parentIndex = '',
+    title,
+    viewCount,
+    year,
+  }) => ({
+    guid: `${grandparentTitle} - ${parentIndex} - ${index} - ${year} - ${title}`,
     key,
     title,
     watched: parseInt(viewCount || '0', 10) > 0,

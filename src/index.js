@@ -29,8 +29,8 @@ const servers = process.argv.slice(2).map(parseCLIArg);
     const watched = new Set();
 
     for (const serverMovies of movies) {
-      serverMovies.forEach(media => {
-        if (media.watched) watched.add(media.guid);
+      serverMovies.forEach(movie => {
+        if (movie.watched) watched.add(movie.guid);
       });
     }
 
