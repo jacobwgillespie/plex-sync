@@ -7,10 +7,12 @@
     "plex-sync": "bin/plex-sync"
   },
   "scripts": {
-    "build": "babel src --out-dir lib",
-    "prepublish": "npm run build",
+    "build": "babel src --out-dir lib/",
+    "lint": "eslint src",
+    "preversion": ". ./resources/checkgit.sh && npm test",
+    "prepublish": ". ./resources/prepublish.sh",
     "sync": "node lib/index.js",
-    "test": "echo No Tests && exit 0",
+    "test": "npm run build",
     "watch": "npm run build -- --watch"
   },
   "author": "Jacob Gillespie <jacobwgillespie@gmail.com>",

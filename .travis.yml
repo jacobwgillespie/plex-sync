@@ -1,0 +1,33 @@
+language: node_js
+
+node_js:
+  - "node"
+  - "4"
+
+cache:
+  directories:
+  - node_modules
+
+before_install:
+- npm config set spin false --global
+
+script:
+- npm run lint && npm run test
+
+after_failure:
+- "(cd resources; python travis_after_all.py)"
+
+after_success:
+- "(cd resources; python travis_after_all.py)"
+- export $(cat resources/.to_export_back)
+
+deploy:
+  provider: npm
+  email: jacobwgillespie@gmail.com
+  api_key:
+    secure: hNHjKfSrkyX1tOqxNjXE6DsINvmYcI1JLGwAUvzpzax7vDmxkRPsCwZTcL6uDqQMgA76OV2BaYXGQNaH1wDmOEgf9sdiT2qN8vpLSxsnldu//Jq1mLwkQEy6L5It4U3Nvn8KWnzJf9LhlDnVp2xArVVPquRK/k215hhNJV/mr+X3cmyLMABcAiZVYkVB7hERAGG6L392zA0Kx54IDg0r8SrMcBy0EWJB84clBPnFkMqgYwbbOogn2FTmZUWpIjLno4h5ifsaqt761QXFUOMi43e72G9j2IOK+GFy4uoY43+9VP6qa3xS10UmL30VaBsGqQDGTLTAmtzXDke0BHTQnYE2dwIo7+hCdNr08P3WAYd82gqCnoKKPjklcyErNYpFTs6o5PlJ6zaHarVsvbLoIH3lgiM2e04nezKr+dqq2OMpzuU1lZi7/29UBkFSJZhlfP8L93NTyeiwLlK1Xy9sTPBDGvRQiM59ECcUYE/ifV3ufy/5JevaGR8adffr4DULXSqozLTojZgJBOZ8V9MKthH1cJ0uziz1TEJwK+KjqXh+70Y8GHp/h1p9xIL6uLU3aIyewssLfruDbRIiisfxQIIYsA1H7wW7pOHVtdYfetXxalTBP11EwIrq1g0xU1UKqqOqaGwAMdMFPi06w1vxnX8HNvOREbmWROw1hzqkDp0=
+  on:
+    tags: true
+    repo: jacobwgillespie/plex-sync
+    branch: master
+    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
