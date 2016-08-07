@@ -1,9 +1,13 @@
 import ProgressBar from 'ascii-progress';
+import updateNotifier from 'update-notifier';
 
 import { exitUsage, log } from './ui';
 import { fetchMediaInfo, fetchURLs, markWatched } from './plex';
+import pkg from '../package.json';
 
 import './env';
+
+updateNotifier({ pkg }).notify();
 
 const DRY_RUN = !!process.env.DRY_RUN;
 
