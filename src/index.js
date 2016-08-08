@@ -51,7 +51,7 @@ const servers = process.argv.slice(2).map(parseCLIArg);
             return;
           }
 
-          markWatched(server.host, media.key);
+          markWatched(server, media);
         }
       );
     }

@@ -74,14 +74,12 @@ export const fetchMovies = async (server, fuzzy = true) => {
   );
 };
 
-export const markWatched = async (src, key) => {
-  const id = key.match(/\/library\/metadata\/(\d+)/)[1];
-  const url = `http://${src}/:/scrobble?identifier=com.plexapp.plugins.library&key=${id}&X-Plex-Token=${TOKEN}`;
-  return await fetchText(url);
-};
+const extractID = key => key.match(/\/library\/metadata\/(\d+)/)[1];
 
-export const markUnatched = async (src, key) => {
-  const id = key.match(/\/library\/metadata\/(\d+)/)[1];
-  const url = `http://${src}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${id}&X-Plex-Token=${TOKEN}`;
-  return await fetchText(url);
-};
+export const markWatched = async (server, movie) => await fetchText(
+  `http://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${TOKEN}`
+);
+
+export const markUnatched = async (server, movie) => await fetchText(
+  `http://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${TOKEN}`
+);
