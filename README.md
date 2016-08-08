@@ -31,7 +31,7 @@ There are several available configuration environment variables:
 
 Variable | Description
 -------- | -----------
-`PLEX_TOKEN` | **Required.**  The API token used to access your Plex server.  To locate this token, visit a media item page (like for a movie or TV episode), click on the **Info** link in the item menu (the **...**), then choose "View XML" at the bottom of the info dialog.  Look in the URL bar at the very end of the URL for something like `X-Plex-Token=xxxYOUR_TOKEN_HERExxx`.  That is your authentication token.
+`PLEX_TOKEN` | **Required.**  The API token used to access your Plex server.  To locate this token, follow the [instructions here](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token), or drag and drop this bookmarklet to your bookmarks bar: [Plex Access Token][0].
 `DRY_RUN` | Set this environment variable to make `plex-sync` print out what it was planning to do rather than actually perform the synchronization.
 `MATCH_TYPE` | Can be either `fuzzy` (default) or `precise`.  When the matching is fuzzy, the script will match items by their year and title.  When the matching is precise, the script matches items by their internal Plex GUID, which is usually the IMDb or TMDb ID.  This requires an individual API request to be performed for each item (each movie, each TV episode, etc.) and thus is very slow and can potentially overwhelm and crash the Plex server.  Use at your own risk.
 `RATE_LIMIT` | Default `5`.  If the `MATCH_TYPE` is set to `precise`, this is the maximum number of concurrent API requests `plex-sync` will make to your server to fetch GUIDs.  Use this to (potentially) alleviate performance issues with precise matching.
@@ -79,3 +79,5 @@ Contributions are welcome.  Open a pull request or issue to contribute.
 ## License
 
 MIT license.  See `LICENSE` for more information.
+
+[0] - javascript:(function()%7Bif%20(%2F(%5E%7C%5C.)plex%5C.tv%24%2F.test(window.location.hostname))%20%7Bprompt('Your%20Plex%20token'%2C%20window.PLEXWEB.myPlexAccessToken)%7D%20else%20%7Balert('Please%20drag%20this%20link%20to%20your%20bookmark%20bar%20and%20click%20it%20when%20using%20the%20Plex%20Web%20App')%3B%7D%7D)()
