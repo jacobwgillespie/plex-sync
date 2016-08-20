@@ -6,6 +6,13 @@
   "bin": {
     "plex-sync": "bin/plex-sync"
   },
+  "files": [
+    "bin",
+    "lib",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "babel src --out-dir lib/",
     "lint": "eslint src",
