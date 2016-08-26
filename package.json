@@ -25,7 +25,7 @@
   "author": "Jacob Gillespie <jacobwgillespie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "ascii-progress": "^1.0.2",
+    "ascii-progress": "jacobwgillespie/ascii-progress#patch-1",
     "babel-core": "^6.13.2",
     "babel-runtime": "^6.11.6",
     "dotenv": "^2.0.0",
