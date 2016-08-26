@@ -1,6 +1,6 @@
 {
   "name": "plex-sync",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Sync watched status between Plex servers",
   "main": "lib/index.js",
   "bin": {
