@@ -24,14 +24,12 @@ const fetchXML = url =>
 const rateLimitFetchXML = url =>
   concurrent(fetchXML, url);
 
-export const TOKEN = process.env.PLEX_TOKEN;
-
 const flatten = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 );
 
 export const fetchMedia = async (server) => {
-  const url = `http://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${TOKEN}`;
+  const url = `http://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${server.token}`;
   return (
     await fetchXML(url)
     .then(res => res.MediaContainer.Video)
@@ -57,7 +55,7 @@ export const fetchMedia = async (server) => {
 };
 
 export const fetchMediaGUID = async (server, media) => {
-  const url = `http://${server.host}${media.key}?X-Plex-Token=${TOKEN}`;
+  const url = `http://${server.host}${media.key}?X-Plex-Token=${server.token}`;
   return await rateLimitFetchXML(url)
   .then(res => res.MediaContainer.Video[0].$)
   .then(({ guid }) => ({
@@ -77,9 +75,9 @@ export const fetchMovies = async (server, fuzzy = true) => {
 const extractID = key => key.match(/\/library\/metadata\/(\d+)/)[1];
 
 export const markWatched = async (server, movie) => await fetchText(
-  `http://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${TOKEN}`
+  `http://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`
 );
 
 export const markUnatched = async (server, movie) => await fetchText(
-  `http://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${TOKEN}`
+  `http://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`
 );

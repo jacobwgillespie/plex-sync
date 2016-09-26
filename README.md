@@ -31,7 +31,7 @@ There are several available configuration environment variables:
 
 Variable | Description
 -------- | -----------
-`PLEX_TOKEN` | **Required.**  The API token used to access your Plex server.  To locate this token, follow the [instructions here](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token), or use [this bookmarklet](https://jacobwgillespie.github.io/plex-token-bookmarklet/).
+`PLEX_TOKEN` | The API token used to access your Plex server.  To locate this token, follow the [instructions here](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token), or use [this bookmarklet](https://jacobwgillespie.github.io/plex-token-bookmarklet/).  **The Plex token must be set on the arguments or via the environment variable.**
 `DRY_RUN` | Set this environment variable to make `plex-sync` print out what it was planning to do rather than actually perform the synchronization.
 `MATCH_TYPE` | Can be either `fuzzy` (default) or `precise`.  When the matching is fuzzy, the script will match items by their year and title.  When the matching is precise, the script matches items by their internal Plex GUID, which is usually the IMDb or TMDb ID.  This requires an individual API request to be performed for each item (each movie, each TV episode, etc.) and thus is very slow and can potentially overwhelm and crash the Plex server.  Use at your own risk.
 `RATE_LIMIT` | Default `5`.  If the `MATCH_TYPE` is set to `precise`, this is the maximum number of concurrent API requests `plex-sync` will make to your server to fetch GUIDs.  Use this to (potentially) alleviate performance issues with precise matching.
@@ -41,7 +41,7 @@ First, find the IDs for the libraries on each server you would like to sync.  Th
 Next, use the CLI as follows:
 
 ```shell
-$ plex-sync IP[:PORT]/SECTION IP[:PORT]/SECTION [IP[:PORT]/SECTION...]
+$ plex-sync [token@]IP[:PORT]/SECTION[,rw] [token@]IP[:PORT]/SECTION[,rw] [[token@]IP[:PORT]/SECTION[,rw]...]
 ```
 
 ### Examples
@@ -68,6 +68,24 @@ Precise matching (slow and may crash the Plex server):
 
 ```shell
 $ MATCH_TYPE=precise plex-sync 10.0.1.5/1 10.0.1.5/1
+```
+
+Syncing between multiple Plex users (different access tokens):
+
+```shell
+$ plex-sync xxxxxx@10.0.1.5/1 zzzzzz@10.0.1.10/3
+```
+
+Unidirectional sync (read from one server, write to the other):
+
+```shell
+$ plex-sync 10.0.1.5/1,r 10.0.1.10/3,w
+```
+
+Complex use case:
+
+```shell
+$ plex-sync xxxx@10.0.1.5:32401/1,r yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
 ```
 
 For more complex strategies, like syncing between multiple different library mappings, just run the tool multiple times.  If you need to run the synchronization on a schedule, use another scheduling tool like cron.  These more advanced features may be added in the future, but currently `plex-sync` is very simple.

@@ -28,10 +28,14 @@ const servers = process.argv.slice(2).map(parseCLIArg);
 
     const watched = new Set();
 
-    for (const serverMovies of movies) {
-      serverMovies.forEach((movie) => {
-        if (movie.watched) watched.add(movie.guid);
-      });
+    for (const [idx, serverMovies] of movies.entries()) {
+      const server = servers[idx];
+
+      if (server.mode.read) {
+        serverMovies.forEach((movie) => {
+          if (movie.watched) watched.add(movie.guid);
+        });
+      }
     }
 
     log('Syncing any unsynced media...');
@@ -39,21 +43,23 @@ const servers = process.argv.slice(2).map(parseCLIArg);
     for (const [idx, serverMovies] of movies.entries()) {
       const server = servers[idx];
 
-      const needsSync = serverMovies.filter(
-        movie => !movie.watched && watched.has(movie.guid)
-      );
+      if (server.mode.write) {
+        const needsSync = serverMovies.filter(
+          movie => !movie.watched && watched.has(movie.guid)
+        );
 
-      await progressMap(
-        needsSync,
-        (media) => {
-          if (DRY_RUN) {
-            log(`Dry run: marking ${media.title} watched on ${server.host}`);
-            return;
+        await progressMap(
+          needsSync,
+          (media) => {
+            if (DRY_RUN) {
+              log(`Dry run: marking ${media.title} watched on ${server.host}`);
+              return;
+            }
+
+            markWatched(server, media);
           }
-
-          markWatched(server, media);
-        }
-      );
+        );
+      }
     }
 
     log('Sync completed!');
