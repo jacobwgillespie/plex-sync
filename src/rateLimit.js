@@ -6,7 +6,7 @@ export const concurrent = (fn, ...args) => {
     current.push(promise);
     resolve(fn2(...args2));
     promise.then(
-      res => {
+      (res) => {
         current.splice(current.indexOf(promise), 1);
 
         if (current.length < limit && backlog.length > 0) {
@@ -19,7 +19,7 @@ export const concurrent = (fn, ...args) => {
   };
 
   let resolve;
-  const promise = new Promise(res => {
+  const promise = new Promise((res) => {
     resolve = res;
   });
 

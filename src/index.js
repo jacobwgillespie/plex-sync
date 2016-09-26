@@ -29,7 +29,7 @@ const servers = process.argv.slice(2).map(parseCLIArg);
     const watched = new Set();
 
     for (const serverMovies of movies) {
-      serverMovies.forEach(movie => {
+      serverMovies.forEach((movie) => {
         if (movie.watched) watched.add(movie.guid);
       });
     }
@@ -45,7 +45,7 @@ const servers = process.argv.slice(2).map(parseCLIArg);
 
       await progressMap(
         needsSync,
-        media => {
+        (media) => {
           if (DRY_RUN) {
             log(`Dry run: marking ${media.title} watched on ${server.host}`);
             return;

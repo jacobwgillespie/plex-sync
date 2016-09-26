@@ -28,7 +28,7 @@ export const progressMap = (items, fn) => {
   }));
 };
 
-export const parseCLIArg = arg => {
+export const parseCLIArg = (arg) => {
   const matches = arg.match(/^(([^:]+)(:\d+)?)\/(\d+)$/);
   if (!matches) exitUsage();
   const host = `${matches[2]}${matches[3] || ':32400'}`;
