@@ -46,7 +46,7 @@ export const progressMap = (items, fn) => {
 };
 
 export const parseCLIArg = (arg) => {
-  const matches = arg.match(/^(([^@]+)@)?(([^:]+)(:\d+)?)\/(\d+)(,[rw][rw])?$/);
+  const matches = arg.match(/^(([^@]+)@)?(([^:]+)(:\d+)?)\/(\d+)(,[rw][rw]?)?$/);
   if (!matches) exitUsage();
   const token = matches[2] || TOKEN;
   const host = `${matches[4]}${matches[5] || ':32400'}`;
