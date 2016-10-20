@@ -17,7 +17,7 @@
     "build": "babel src --out-dir lib/",
     "lint": "eslint src",
     "preversion": ". ./resources/checkgit.sh && npm test",
-    "prepublish": ". ./resources/prepublish.sh",
+    "prepublish": "npm run build",
     "sync": "node lib/index.js",
     "test": "npm run build",
     "watch": "npm run build -- --watch"
@@ -25,8 +25,8 @@
   "author": "Jacob Gillespie <jacobwgillespie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "ascii-progress": "jacobwgillespie/ascii-progress#patch-1",
-    "babel-core": "^6.13.2",
+    "ascii-progress": "^1.0.4",
+    "babel-core": "^6.17.0",
     "babel-runtime": "^6.11.6",
     "dotenv": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
@@ -34,14 +34,14 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-cli": "^6.16.0",
     "babel-eslint": "^7.0.0",
-    "babel-plugin-transform-runtime": "^6.12.0",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-stage-0": "^6.5.0",
-    "eslint": "^3.3.1",
-    "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "^1.13.0"
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1"
   },
   "repository": {
     "type": "git",
