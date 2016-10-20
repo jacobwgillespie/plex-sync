@@ -41,7 +41,8 @@ First, find the IDs for the libraries on each server you would like to sync.  Th
 Next, use the CLI as follows:
 
 ```shell
-$ plex-sync [token@]IP[:PORT]/SECTION[,rw] [token@]IP[:PORT]/SECTION[,rw] [[token@]IP[:PORT]/SECTION[,rw]...]
+$ plex-sync [https://][token@]IP[:PORT]/SECTION[,rw] [https://][token@]IP[:PORT]/SECTION[,rw]
+            [[https://][token@]IP[:PORT]/SECTION[,rw]...]
 ```
 
 ### Examples
@@ -56,6 +57,12 @@ Sync three servers, with different ports:
 
 ```shell
 $ plex-sync 10.0.1.5:32401/1 10.0.1.5:32402/1 10.0.1.10/3
+```
+
+Sync with a server via HTTPS:
+
+```shell
+$ plex-sync 10.0.1.2/2 https://server-domain/3
 ```
 
 Dry run, to see what the script will do:
@@ -85,7 +92,7 @@ $ plex-sync 10.0.1.5/1,r 10.0.1.10/3,w
 Complex use case:
 
 ```shell
-$ plex-sync xxxx@10.0.1.5:32401/1,r yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
+$ plex-sync xxxx@10.0.1.5:32401/1,r https://yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
 ```
 
 For more complex strategies, like syncing between multiple different library mappings, just run the tool multiple times.  If you need to run the synchronization on a schedule, use another scheduling tool like cron.  These more advanced features may be added in the future, but currently `plex-sync` is very simple.

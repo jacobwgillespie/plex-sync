@@ -8,7 +8,8 @@ export const TOKEN = process.env.PLEX_TOKEN;
 
 export const exitUsage = () => {
   console.error(`
-Usage: plex-sync [token@]IP[:PORT]/SECTION[,rw] [token@]IP[:PORT]/SECTION[,rw] [[token@]IP[:PORT]/SECTION[,rw]...]
+Usage: plex-sync [https://][token@]IP[:PORT]/SECTION[,rw] [https://][token@]IP[:PORT]/SECTION[,rw]
+                 [[https://][token@]IP[:PORT]/SECTION[,rw]...]
 
 Example:
 
@@ -17,6 +18,9 @@ Example:
 
     Sync three servers:
     $ plex-sync 10.0.1.2/1 10.0.1.3/1 10.0.1.4/1
+
+    Sync with a server via HTTPS
+    $ plex-sync 10.0.1.2/2 https://server-domain/3
 
     Dry run, to see what the script will do:
     $ DRY_RUN=1 plex-sync 10.0.1.5/1 10.0.1.5/1
@@ -31,7 +35,7 @@ Example:
     $ plex-sync 10.0.1.5/1,r 10.0.1.10/3,w
 
     Complex use case:
-    $ plex-sync xxxx@10.0.1.5:32401/1,r yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
+    $ plex-sync xxxx@10.0.1.5:32401/1,r https://yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
 `.trim());
   process.exit(1);
 };
@@ -60,12 +64,13 @@ export const progressMap = (items, fn) => {
 };
 
 export const parseCLIArg = (arg) => {
-  const matches = arg.match(/^(([^@]+)@)?(([^:]+)(:\d+)?)\/(\d+)(,[rw][rw]?)?$/);
+  const matches = arg.match(/^((https?):\/\/)?(([^@]+)@)?(([^:]+)(:\d+)?)\/(\d+)(,[rw][rw]?)?$/);
   if (!matches) exitUsage();
-  const token = matches[2] || TOKEN;
-  const host = `${matches[4]}${matches[5] || ':32400'}`;
-  const section = matches[6] || '1';
-  const modeString = matches[8] || 'rw';
+  const protocol = matches[2] === 'https' ? 'https' : 'http';
+  const token = matches[4] || TOKEN;
+  const host = `${matches[6]}${matches[7] || ':32400'}`;
+  const section = matches[8] || '1';
+  const modeString = matches[10] || 'rw';
   const mode = {
     read: modeString.includes('r'),
     write: modeString.includes('w'),
@@ -73,5 +78,5 @@ export const parseCLIArg = (arg) => {
 
   if (!token) exitToken();
 
-  return { token, host, section, mode };
+  return { protocol, token, host, section, mode };
 };
