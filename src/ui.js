@@ -36,6 +36,20 @@ Example:
   process.exit(1);
 };
 
+export const exitToken = () => {
+  console.error(`
+Error: missing Plex authentication token for one or more of the specified servers
+
+Please either set your Plex authentication token via the PLEX_TOKEN environment variable
+or pass the Plex token in the server definition (TOKEN@0.0.0.0...).  See 'plex-sync help'
+for more information.
+
+If you need help locating your Plex authentication token, feel free to use the bookmarklet
+located at https://jacobwgillespie.github.io/plex-token-bookmarklet/
+`.trim());
+  process.exit(1);
+};
+
 export const progressMap = (items, fn) => {
   const progress = new ProgressBar({ total: items.length });
 
@@ -56,5 +70,8 @@ export const parseCLIArg = (arg) => {
     read: modeString.includes('r'),
     write: modeString.includes('w'),
   };
+
+  if (!token) exitToken();
+
   return { token, host, section, mode };
 };
