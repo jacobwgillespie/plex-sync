@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import ProgressBar from 'ascii-progress';
+import Progress from 'ts-progress';
 
 export const log = (...args) => console.error(...args);
 
@@ -54,11 +54,11 @@ located at https://jacobwgillespie.github.io/plex-token-bookmarklet/
   process.exit(1);
 };
 
-export const progressMap = (items, fn) => {
-  const progress = new ProgressBar({ total: items.length });
+export const progressMap = (items, fn, disable = false) => {
+  const progress = disable ? null : Progress.create({ total: items.length });
 
   return Promise.all(items.map((...args) => {
-    progress.tick();
+    if (!disable) progress.update();
     return fn(...args);
   }));
 };

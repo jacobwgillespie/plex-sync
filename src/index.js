@@ -57,7 +57,8 @@ const servers = process.argv.slice(2).map(parseCLIArg);
             }
 
             markWatched(server, media);
-          }
+          },
+          DRY_RUN
         );
       }
     }

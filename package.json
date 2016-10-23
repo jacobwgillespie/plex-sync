@@ -25,11 +25,11 @@
   "author": "Jacob Gillespie <jacobwgillespie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "ascii-progress": "^1.0.4",
     "babel-core": "^6.17.0",
     "babel-runtime": "^6.11.6",
     "dotenv": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "ts-progress": "^0.0.7",
     "update-notifier": "^1.0.2",
     "xml2js": "^0.4.17"
   },
