@@ -16,7 +16,7 @@
   "scripts": {
     "build": "babel src --out-dir lib/",
     "lint": "eslint src",
-    "preversion": ". ./resources/checkgit.sh && npm test",
+    "preversion": "npm test",
     "prepublish": "npm run build",
     "sync": "node lib/index.js",
     "test": "npm run build",
