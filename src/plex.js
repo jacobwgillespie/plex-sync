@@ -6,6 +6,8 @@ import { progressMap } from './ui';
 
 import './env';
 
+const PAGE_SIZE = 32;
+
 const parseXML = xml => new Promise((resolve, reject) => {
   parseString(xml, (err, data) => {
     if (err) reject(err);
@@ -28,12 +30,43 @@ const flatten = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 );
 
+const fetchMediaContainer = async (server, page = 1) => {
+  const start = (page - 1) * PAGE_SIZE;
+  const url = `${server.protocol}://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${server.token}&X-Plex-Container-Start=${start}&X-Plex-Container-Size=${PAGE_SIZE}`;
+  return (await rateLimitFetchXML(url));
+};
+
 export const fetchMedia = async (server) => {
-  const url = `${server.protocol}://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${server.token}`;
-  return (
-    await fetchXML(url)
-    .then(res => res.MediaContainer.Video)
-  )
+  // Determine total collection size
+  const totalSize = parseInt((
+    await fetchMediaContainer(server)
+  ).MediaContainer.$.totalSize, 10);
+  const totalPages = Math.ceil(totalSize / PAGE_SIZE);
+
+  // Fetch all videos
+  const promises = [];
+  for (let i = 1; i <= totalPages; i += 1) {
+    promises.push(fetchMediaContainer(server, i));
+  }
+
+  // Unpack video results
+  const videos = [];
+  await Promise.all(promises).then(
+    (results) => {
+      results.forEach(
+        (res) => {
+          res.MediaContainer.Video.forEach(
+            (video) => {
+              videos.push(video);
+            }
+          );
+        }
+      );
+    }
+  );
+
+  // Map videos into entries
+  return videos
   .map(
     media => media.$
   )
