@@ -27,7 +27,7 @@
   "dependencies": {
     "babel-core": "^6.17.0",
     "babel-runtime": "^6.11.6",
-    "dotenv": "^2.0.0",
+    "dotenv": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "ts-progress": "^0.0.7",
     "update-notifier": "^1.0.2",
