@@ -13,7 +13,7 @@ export const concurrent = (fn, ...args) => {
           enqueue(backlog.pop());
         }
         return res;
-      }
+      },
     );
     return promise;
   };

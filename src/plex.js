@@ -27,13 +27,13 @@ const rateLimitFetchXML = url =>
   concurrent(fetchXML, url);
 
 const flatten = list => list.reduce(
-  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
+  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), [],
 );
 
 const fetchMediaContainer = async (server, page = 1) => {
   const start = (page - 1) * PAGE_SIZE;
   const url = `${server.protocol}://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${server.token}&X-Plex-Container-Start=${start}&X-Plex-Container-Size=${PAGE_SIZE}`;
-  return (await rateLimitFetchXML(url));
+  return rateLimitFetchXML(url);
 };
 
 export const fetchMedia = async (server) => {
@@ -58,17 +58,17 @@ export const fetchMedia = async (server) => {
           res.MediaContainer.Video.forEach(
             (video) => {
               videos.push(video);
-            }
+            },
           );
-        }
+        },
       );
-    }
+    },
   );
 
   // Map videos into entries
   return videos
   .map(
-    media => media.$
+    media => media.$,
   )
   .map(({
     grandparentTitle = '',
@@ -89,7 +89,7 @@ export const fetchMedia = async (server) => {
 
 export const fetchMediaGUID = async (server, media) => {
   const url = `${server.protocol}://${server.host}${media.key}?X-Plex-Token=${server.token}`;
-  return await rateLimitFetchXML(url)
+  return rateLimitFetchXML(url)
   .then(res => res.MediaContainer.Video[0].$)
   .then(({ guid }) => ({
     ...media,
@@ -99,18 +99,18 @@ export const fetchMediaGUID = async (server, media) => {
 
 export const fetchMovies = async (server, fuzzy = true) => {
   const media = await fetchMedia(server);
-  return fuzzy ? media : await progressMap(
+  return fuzzy ? media : progressMap(
     media,
-    movie => fetchMediaGUID(server, movie)
+    movie => fetchMediaGUID(server, movie),
   );
 };
 
 const extractID = key => key.match(/\/library\/metadata\/(\d+)/)[1];
 
-export const markWatched = async (server, movie) => await fetchText(
-  `${server.protocol}://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`
+export const markWatched = async (server, movie) => fetchText(
+  `${server.protocol}://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`,
 );
 
-export const markUnatched = async (server, movie) => await fetchText(
-  `${server.protocol}://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`
+export const markUnatched = async (server, movie) => fetchText(
+  `${server.protocol}://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`,
 );

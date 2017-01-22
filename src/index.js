@@ -23,7 +23,7 @@ const servers = process.argv.slice(2).map(parseCLIArg);
 
     const movies = await progressMap(
       servers,
-      server => fetchMovies(server, FUZZY)
+      server => fetchMovies(server, FUZZY),
     );
 
     const watched = new Set();
@@ -45,10 +45,11 @@ const servers = process.argv.slice(2).map(parseCLIArg);
 
       if (server.mode.write) {
         const needsSync = serverMovies.filter(
-          movie => !movie.watched && watched.has(movie.guid)
+          movie => !movie.watched && watched.has(movie.guid),
         );
 
-        await progressMap(
+        // Note: the await here is intentional - we want to process servers one at a time
+        await progressMap( // eslint-disable-line no-await-in-loop
           needsSync,
           (media) => {
             if (DRY_RUN) {
@@ -58,7 +59,7 @@ const servers = process.argv.slice(2).map(parseCLIArg);
 
             markWatched(server, media);
           },
-          DRY_RUN
+          DRY_RUN,
         );
       }
     }
