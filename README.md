@@ -5,6 +5,7 @@ A simple command-line utility to synchronize watched / seen status between diffe
 [![npm](https://img.shields.io/npm/v/plex-sync.svg?maxAge=2592000)](https://www.npmjs.com/package/plex-sync)
 [![Travis](https://img.shields.io/travis/jacobwgillespie/plex-sync.svg?maxAge=2592000)](https://travis-ci.org/jacobwgillespie/plex-sync)
 [![Dependencies](https://david-dm.org/jacobwgillespie/plex-sync.svg)](https://david-dm.org/jacobwgillespie/plex-sync)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jacobwgillespie/plex-sync.svg)](https://greenkeeper.io/)
 ![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?maxAge=2592000)
 
 [![asciicast](https://asciinema.org/a/9j3oyj46vugcc039l7tbxecw4.png)](https://asciinema.org/a/9j3oyj46vugcc039l7tbxecw4)
