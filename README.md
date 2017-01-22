@@ -1,5 +1,7 @@
 # plex-sync
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jacobwgillespie/plex-sync.svg)](https://greenkeeper.io/)
+
 A simple command-line utility to synchronize watched / seen status between different [Plex Media Servers](https://plex.tv).
 
 [![npm](https://img.shields.io/npm/v/plex-sync.svg?maxAge=2592000)](https://www.npmjs.com/package/plex-sync)
