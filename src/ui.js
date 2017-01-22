@@ -2,6 +2,8 @@
 
 import Progress from 'ts-progress';
 
+import { oldCLIArgsToConfig } from './config';
+
 export const log = (...args) => console.error(...args);
 
 export const TOKEN = process.env.PLEX_TOKEN;
@@ -37,6 +39,17 @@ Example:
     Complex use case:
     $ plex-sync xxxx@10.0.1.5:32401/1,r https://yyyy@10.0.1.10/3,w zzzz@10.0.1.15/2,rw
 `.trim());
+  process.exit(1);
+};
+
+export const exitNewConfig = () => {
+  console.error(`
+plex-sync uses a new YAML-based configuration format - create a file with the
+following contents and run 'plex-sync [config-file]':
+
+`.trim());
+  console.error();
+  console.error(oldCLIArgsToConfig(process.argv.slice(2)));
   process.exit(1);
 };
 

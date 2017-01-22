@@ -1,6 +1,6 @@
 import updateNotifier from 'update-notifier';
 
-import { exitUsage, log, parseCLIArg, progressMap } from './ui';
+import { exitNewConfig, exitUsage, log, parseCLIArg, progressMap } from './ui';
 import { fetchMovies, markWatched } from './plex';
 import pkg from '../package.json';
 
@@ -10,6 +10,10 @@ updateNotifier({ pkg }).notify();
 
 const DRY_RUN = !!process.env.DRY_RUN;
 const FUZZY = (process.env.MATCH_TYPE || 'fuzzy') === 'fuzzy';
+
+if (process.argv.length > 2) {
+  exitNewConfig();
+}
 
 if (process.argv.length < 4) {
   exitUsage();
