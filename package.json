@@ -29,7 +29,7 @@
     "babel-runtime": "^6.11.6",
     "dotenv": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
-    "ts-progress": "^0.0.10",
+    "ts-progress": "^0.1.0",
     "update-notifier": "^1.0.2",
     "xml2js": "^0.4.17"
   },
