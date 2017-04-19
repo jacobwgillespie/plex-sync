@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "babel src --out-dir lib/",
-    "lint": "eslint src",
+    "lint": "eslint --ignore-path .gitignore .",
     "preversion": "npm test",
     "prepublish": "npm run build",
     "sync": "node lib/index.js",
@@ -25,22 +25,22 @@
   "author": "Jacob Gillespie <jacobwgillespie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-core": "^6.17.0",
-    "babel-runtime": "^6.11.6",
+    "babel-core": "^6.24.1",
+    "babel-runtime": "^6.23.0",
     "dotenv": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
-    "ts-progress": "^0.1.0",
-    "update-notifier": "^2.0.0",
+    "ts-progress": "^0.1.2",
+    "update-notifier": "^2.1.0",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-eslint": "^7.0.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "eslint": "^3.13.0",
-    "eslint-config-airbnb-base": "^11.0.1",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
     "eslint-plugin-import": "^2.2.0"
   },
   "repository": {
