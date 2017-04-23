@@ -7,6 +7,7 @@
       "ForInStatement",
       "LabeledStatement",
       "WithStatement"
-    ]
+    ],
+    "no-console": "off"
   }
 }

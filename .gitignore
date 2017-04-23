@@ -1,4 +1,5 @@
-node_modules/
-lib/
 .env
+.plex-sync.json
 *.log
+lib/
+node_modules/
