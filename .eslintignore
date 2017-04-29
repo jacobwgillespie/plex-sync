@@ -1,6 +1,4 @@
-.env
-.plex-sync.json
-*.log
 flow-coverage/
+flow-typed/
 lib/
 node_modules/

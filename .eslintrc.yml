@@ -1,0 +1,14 @@
+
+parser: babel-eslint
+extends:
+  - airbnb-base
+  - plugin:flowtype/recommended
+plugins:
+  - flowtype
+rules:
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+    - LabeledStatement
+    - WithStatement
+  no-console: off

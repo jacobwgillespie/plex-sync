@@ -1,3 +1,5 @@
+// @flow
+
 import program from 'caporal';
 import updateNotifier from 'update-notifier';
 

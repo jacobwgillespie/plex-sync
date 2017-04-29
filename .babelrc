@@ -1,4 +1,18 @@
 {
-  "presets": ["es2015", "stage-0"],
-  "plugins": ["transform-runtime"]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": 4
+      },
+      "include": ["transform-es2015-spread"]
+    }]
+  ],
+  "plugins": [
+    ["transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    "transform-flow-strip-types"
+  ]
 }

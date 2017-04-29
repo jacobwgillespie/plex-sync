@@ -1,3 +1,5 @@
+// @flow
+
 import { parseString } from 'xml2js';
 import fetch from 'isomorphic-fetch';
 
@@ -30,13 +32,13 @@ const flatten = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), [],
 );
 
-const fetchMediaContainer = async (server, page = 1) => {
+const fetchMediaContainer = async (server: Object, page = 1) => {
   const start = (page - 1) * PAGE_SIZE;
   const url = `${server.protocol}://${server.host}/library/sections/${server.section}/allLeaves?X-Plex-Token=${server.token}&X-Plex-Container-Start=${start}&X-Plex-Container-Size=${PAGE_SIZE}`;
   return rateLimitFetchXML(url);
 };
 
-export const fetchMedia = async (server) => {
+export const fetchMedia = async (server: Object) => {
   // Determine total collection size
   const totalSize = parseInt((
     await fetchMediaContainer(server)
@@ -87,7 +89,7 @@ export const fetchMedia = async (server) => {
   }));
 };
 
-export const fetchMediaGUID = async (server, media) => {
+export const fetchMediaGUID = async (server: Object, media: Object) => {
   const url = `${server.protocol}://${server.host}${media.key}?X-Plex-Token=${server.token}`;
   return rateLimitFetchXML(url)
   .then(res => res.MediaContainer.Video[0].$)
@@ -97,7 +99,7 @@ export const fetchMediaGUID = async (server, media) => {
   }));
 };
 
-export const fetchMovies = async (server, fuzzy = true) => {
+export const fetchMovies = async (server: Object, fuzzy: boolean = true) => {
   const media = await fetchMedia(server);
   return fuzzy ? media : progressMap(
     media,
@@ -107,10 +109,10 @@ export const fetchMovies = async (server, fuzzy = true) => {
 
 const extractID = key => key.match(/\/library\/metadata\/(\d+)/)[1];
 
-export const markWatched = async (server, movie) => fetchText(
+export const markWatched = async (server: Object, movie: Object) => fetchText(
   `${server.protocol}://${server.host}/:/scrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`,
 );
 
-export const markUnatched = async (server, movie) => fetchText(
+export const markUnatched = async (server: Object, movie: Object) => fetchText(
   `${server.protocol}://${server.host}/:/unscrobble?identifier=com.plexapp.plugins.library&key=${extractID(movie.key)}&X-Plex-Token=${server.token}`,
 );

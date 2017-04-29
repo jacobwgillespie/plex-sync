@@ -1,8 +1,10 @@
+// @flow
+
 /* eslint-disable no-console */
 
 import Progress from 'ts-progress';
 
-export const log = (...args) => console.error(...args);
+export const log = (...args: Array<any>) => console.error(...args);
 
 export const TOKEN = process.env.PLEX_TOKEN;
 
@@ -54,18 +56,20 @@ located at https://jacobwgillespie.github.io/plex-token-bookmarklet/
   process.exit(1);
 };
 
-export const progressMap = (items, fn, disable = false) => {
+export const progressMap = (items: Array<any>, fn: Function, disable: boolean = false) => {
   const progress = disable ? null : Progress.create({ total: items.length });
 
   return Promise.all(items.map((...args) => {
-    if (!disable) progress.update();
+    if (!disable && progress) progress.update();
     return fn(...args);
   }));
 };
 
-export const parseCLIArg = (arg) => {
+export const parseCLIArg = (arg: string) => {
   const matches = arg.match(/^((https?):\/\/)?(([^@]+)@)?(([^:]+)(:\d+)?)\/(\d+)(,[rw][rw]?)?$/);
-  if (!matches) exitUsage();
+
+  if (!matches) return exitUsage();
+
   const protocol = matches[2] === 'https' ? 'https' : 'http';
   const token = matches[4] || TOKEN;
   const host = `${matches[6]}${matches[7] || ':32400'}`;

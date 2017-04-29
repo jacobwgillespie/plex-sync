@@ -1,3 +1,5 @@
+// @flow
+
 import { getConfigV1 } from '../config';
 
 export default () => {

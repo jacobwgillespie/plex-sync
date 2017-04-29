@@ -1,3 +1,5 @@
+// @flow
+
 import os from 'os';
 
 import { fetchXML } from './utils';
@@ -23,7 +25,7 @@ const formatError = data => ({
 
 // const errorOrFalse = data => (isError(data) ? formatError(data) : false);
 
-export const fetch = (url, opts) => fetchXML(url, opts).then(
+export const fetch = (url: string, opts: Object) => fetchXML(url, opts).then(
   (data) => {
     if (isError(data)) {
       const formattedError = formatError(data);
@@ -34,9 +36,9 @@ export const fetch = (url, opts) => fetchXML(url, opts).then(
   },
 );
 
-export const fetchPlexTV = (endpoint, opts) => fetch(`https://plex.tv${endpoint}`, opts);
+export const fetchPlexTV = (endpoint: string, opts: Object) => fetch(`https://plex.tv${endpoint}`, opts);
 
-export const getUser = token =>
+export const getUser = (token: string) =>
   fetchPlexTV('/api/v2/user', {
     headers: {
       ...plexClientHeaders,
@@ -48,7 +50,7 @@ export const getUser = token =>
 
 // https://plex.tv/api/v2/user?
 
-export const getUsers = token =>
+export const getUsers = (token: string) =>
   fetchPlexTV('/api/users', {
     headers: {
       ...plexClientHeaders,
@@ -70,7 +72,7 @@ export const requestPin = async () => {
   };
 };
 
-export const checkPin = async (id) => {
+export const checkPin = async (id: string) => {
   const data = await fetchPlexTV(`/pins/${id}.xml`, {
     headers: plexClientHeaders,
   });
