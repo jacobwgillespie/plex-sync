@@ -4,3 +4,4 @@
 flow-coverage/
 lib/
 node_modules/
+Syncfile.yml
