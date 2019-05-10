@@ -30,7 +30,7 @@
     "dotenv": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "ts-progress": "^0.1.2",
-    "update-notifier": "^2.1.0",
+    "update-notifier": "^3.0.0",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
